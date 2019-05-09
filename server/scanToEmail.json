@@ -1,7 +1,7 @@
 {
     "ScanToEmail":  {
                         /* valid email, NULL = show keyboard for user entry */
-                        "Destination": "email@domain.com",
+                        "Destination": ["email@domain.com", "Email2@domain.com"],
 
                         /* ADF - auto document feeder, NULL - Auto, FB */
                         "ScanTray": "ADF",
