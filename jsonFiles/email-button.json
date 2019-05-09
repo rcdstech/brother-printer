@@ -7,7 +7,7 @@
             "id": "email"
           },
           "Mask": {
-            "_text": "true"
+            "_text": "false"
           },
           "LetterTypes": {
             "LetterType": [
@@ -34,7 +34,7 @@
     "Operations": {
       "Op": {
         "_attributes": {
-          "action": "../xml/ScanToEmail",
+          "action": "../xml/email",
           "type": "Submit"
         }
       }

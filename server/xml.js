@@ -37,6 +37,17 @@ router.post('/:xml/myJson/:givenXml', (req, res) => {
     getXML(req.body, req, res);
 })
 
+router.post('/email', (req, res) => {
+    fs.readFile(__dirname + '/../jsonFiles/ScanToEmail.json', 'utf8', function (err, data) {
+        if (err) throw err;
+        let options = {compact: true, ignoreComment: true, spaces: 4};
+        let serverJSON = JSON.parse(data);
+        serverJSON = appendJson(serverJSON, 'Destination', [defaultEmail, req.val || req.email ], '_text');
+        let result = convert.json2xml(serverJSON, options);
+        res.send(result);
+    });
+})
+
 router.post('/:xml', (req, res) => {
         getXML({}, req, res);
 })
