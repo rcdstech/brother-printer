@@ -1,0 +1,27 @@
+[{
+  "Title": {
+    "_text": "Submit to default"
+  },
+  "Operations": {
+    "Op": {
+      "_attributes": {
+        "action": "../xml/ScanToEmail",
+        "type": "Submit"
+      }
+    }
+  }
+},
+  {
+    "Title": {
+      "_text": "submit with email"
+    },
+    "Operations": {
+      "Op": {
+        "_attributes": {
+          "action": "../xml/displayScreen/email-button",
+          "type": "Submit"
+        }
+      }
+    }
+  }]
+
