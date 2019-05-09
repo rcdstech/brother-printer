@@ -4,6 +4,43 @@ const fs = require('fs');
 const convert = require('xml-js');
 const _ = require('lodash');
 const defaultEmail = 'Gajerarubin@gmail.com';
+
+// router.post('/getJson', (req, res) => {
+//     res.send(convert.xml2json('<Title>Email Submit</Title><Operations><Op action="../xml/file/scan2email.json" type="Submit" />\n' +
+//         '          </Operations>', {compact: true, spaces: 4}));
+// })
+
+router.post('/displayScreen/:xmlFile', (req, res) => {
+    fs.readFile(__dirname + '/../jsonFiles/' + req.params.xmlFile + '.json', 'utf8', function (err, data) {
+        let serverJSON = convert.json2xml(JSON.parse(data), {compact: true, spaces: 4});
+        let finalJson = {
+            "_declaration": {
+                "_attributes": {
+                    "version": "1.0",
+                    "encoding": "utf-8"
+                }
+            },
+            "SerioCommands": {
+                "_attributes": {
+                    "version": "1.2"
+                },
+                "DisplayForm": {
+                    "Script": {"$cdata": serverJSON}
+                }
+            }
+        }
+        res.send(convert.json2xml(finalJson, {compact: true, spaces: 4, cdataKey: '$cdata'}));
+    });
+})
+
+router.post('/:xml/myJson/:givenXml', (req, res) => {
+    getXML(req.body, req, res);
+})
+
+router.post('/:xml', (req, res) => {
+        getXML({}, req, res);
+})
+
 router.post('/:xml/:givenXml', (req, res) => {
     fs.readFile(__dirname + '/' + req.params.givenXml, 'utf8', function (err, data) {
         let json = '';
@@ -18,9 +55,6 @@ router.post('/:xml/:givenXml', (req, res) => {
         json = JSON.parse(json);
         getXML(json, req, res);
     });
-})
-router.post('/:xml/myJson/:givenXml', (req, res) => {
-    getXML(req.body, req, res);
 })
 
 function replaceValue(object, keyToBeReplace, value, attr) {
@@ -58,12 +92,12 @@ function appendJson(object, keyToBeReplace, value, attr) {
     return object;
 }
 
-function getXML(json, req, res) {
+function getXML(json, req, res, send = true) {
     fs.readFile(__dirname + '/../jsonFiles/' + req.params.xml + '.json', 'utf8', function (err, data) {
         if (err) throw err;
         let options = {compact: true, ignoreComment: true, spaces: 4};
         let serverJSON = JSON.parse(data);
-        Object.keys(json[req.params.xml]).forEach((key) => {
+        json && json[req.params.xml] && Object.keys(json[req.params.xml]).forEach((key) => {
             if (typeof json[req.params.xml][key] === 'object') {
                 appendJson(serverJSON, key, json[req.params.xml][key], '_text');
             } else {

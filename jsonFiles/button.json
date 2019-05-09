@@ -1,0 +1,13 @@
+{
+  "Title": {
+    "_text": "Email Submit"
+  },
+  "Operations": {
+    "Op": {
+      "_attributes": {
+        "action": "../xml/ScanToEmail",
+        "type": "Submit"
+      }
+    }
+  }
+}

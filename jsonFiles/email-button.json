@@ -1,0 +1,43 @@
+{
+  "UiScreen": {
+    "IoScreen": {
+      "IoObject": {
+        "TextArea": {
+          "_attributes": {
+            "id": "email"
+          },
+          "Mask": {
+            "_text": "true"
+          },
+          "LetterTypes": {
+            "LetterType": [
+              {
+                "_text": "LowerCase"
+              },
+              {
+                "_text": "Numeric"
+              },
+              {
+                "_text": "Glyph"
+              }
+            ]
+          },
+          "Title": {
+            "_text": "Enter Email Address"
+          }
+        }
+      }
+    },
+    "Title": {
+      "_text": "Email Submit"
+    },
+    "Operations": {
+      "Op": {
+        "_attributes": {
+          "action": "../xml/ScanToEmail",
+          "type": "Submit"
+        }
+      }
+    }
+  }
+}

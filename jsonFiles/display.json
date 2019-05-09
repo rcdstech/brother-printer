@@ -1,0 +1,16 @@
+{
+  "_declaration": {
+    "_attributes": {
+      "version": "1.0",
+      "encoding": "utf-8"
+    }
+  },
+  "SerioCommands": {
+    "_attributes": {
+      "version": "1.2"
+    },
+    "DisplayForm": {
+      "Script": {}
+    }
+  }
+}
