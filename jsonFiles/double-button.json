@@ -1,16 +1,27 @@
-{
-  "UiScreen":
-    {"Title": {
-        "_text": "Submit to default"
-      },
-      "Operations": {
-        "Op": {
-          "_attributes": {
-            "action": "../xml/ScanToEmail",
-            "type": "Submit"
-          }
+{"UiScreen": [
+  {
+    "Title": "Submit to default",
+    "Operations": {
+      "Op": {
+        "_attributes": {
+          "action": "../xml/ScanToEmail",
+          "type": "Submit"
         }
       }
     }
+  },
+  {
+    "Title": "Submit to default1",
+    "Operations": {
+      "Op": {
+        "_attributes": {
+          "action": "../xml/displayScreen/email-button",
+          "type": "Submit"
+        }
+      }
+    }
+  }
+]
 }
+
 

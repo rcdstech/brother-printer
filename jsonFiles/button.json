@@ -1,7 +1,5 @@
 {
-  "Title": {
-    "_text": "Email Submit"
-  },
+  "Title": "Email Submit",
   "Operations": {
     "Op": {
       "_attributes": {

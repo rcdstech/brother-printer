@@ -13,6 +13,8 @@ const defaultEmail = 'Gajerarubin@gmail.com';
 router.post('/displayScreen/:xmlFile', (req, res) => {
     fs.readFile(__dirname + '/../jsonFiles/' + req.params.xmlFile + '.json', 'utf8', function (err, data) {
         let serverJSON = convert.json2xml(JSON.parse(data), {compact: true, spaces: 4});
+        serverJSON = serverJSON.toString().replace('</UiScreen>\n' +
+            '<UiScreen>\n', "")
         let finalJson = {
             "_declaration": {
                 "_attributes": {
@@ -92,7 +94,6 @@ function appendJson(object, keyToBeReplace, value, attr) {
                             data.push({[attr]: i})
                         }
                     });
-                    console.log(data)
                     object[key] = data;
                 } else {
                     appendJson(object[key], keyToBeReplace, value, attr);

@@ -6,31 +6,15 @@
           "_attributes": {
             "id": "email"
           },
-          "Mask": {
-            "_text": "false"
-          },
+          "Mask": "false",
           "LetterTypes": {
-            "LetterType": [
-              {
-                "_text": "LowerCase"
-              },
-              {
-                "_text": "Numeric"
-              },
-              {
-                "_text": "Glyph"
-              }
-            ]
+            "LetterType": ["LowerCase", "Numeric", "Glyph"]
           },
-          "Title": {
-            "_text": "Enter Email Address"
-          }
+          "Title": "Enter Email Address"
         }
       }
     },
-    "Title": {
-      "_text": "Email Submit"
-    },
+    "Title":"Email Submit",
     "Operations": {
       "Op": {
         "_attributes": {

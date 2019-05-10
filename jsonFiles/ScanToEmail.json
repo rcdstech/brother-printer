@@ -17,24 +17,12 @@
           }
         }
       },
-      "ScanTray": {
-        "_text": "ADF"
-      },
-      "ColorMode": {
-        "_text": "Color"
-      },
-      "Resolution": {
-        "_text": "Normal"
-      },
-      "FileType": {
-        "_text": "PDF"
-      },
-      "FileNameFixed": {
-        "_text": "true"
-      },
-      "JobFinAckUrl": {
-        "_text": "http://example.bsi.com/jobfin"
-      }
+      "ScanTray": "ADF",
+      "ColorMode": "Color",
+      "Resolution": "Normal",
+      "FileType": "PDF",
+      "FileNameFixed": "true",
+      "JobFinAckUrl": "http://example.bsi.com/jobfin"
     },
     "DisplayInfo": {
       "Script": {
