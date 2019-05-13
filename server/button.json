@@ -1,0 +1,16 @@
+{
+  "Operations": {
+    "Op": [{
+      "_attributes": {
+        "action": "../xml/ScanToEmail",
+        "type": "Submit"
+      }
+    },
+      {
+        "_attributes": {
+          "action": "http://localhost:8081/xml/displayScreen/fc73821be7c5936a83e23167da76fa8f",
+          "type": "Submit"
+        }
+      }]
+  }
+}
