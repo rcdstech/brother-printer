@@ -1,0 +1,18 @@
+{
+    "ScanToEmail":  {
+                        /* valid email, NULL = show keyboard for user entry */
+                        "Destination": ["email@domain.com", "Email2@domain.com"],
+
+                        /* ADF - auto document feeder, NULL - Auto, FB */
+                        "ScanTray": "ADF",
+
+                        /* Color, Mono, Gray, Auto */
+                        "ColorMode":  "Color",
+
+                        /* High, Normal, Low */
+                        "Resolution": "Normal",
+
+                        /* TIFF, JPEG, PDF, XPS, SignedPDF, SecurePDF, PDFA, HighCompressed PDF */
+                        "FileType": "PDF"
+                }
+}

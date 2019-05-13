@@ -19,7 +19,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" style="display: none">
     <div class="row">
         <form enctype="multipart/form-data">
             <div class="form-group">
@@ -29,52 +29,84 @@
             <input class="btn btn-default" type="button" value="Upload"/>
         </form>
     </div>
+    <label id="url" data-toggle="tooltip" title="Click me to Copy URL" onclick="copyToClipboard()"></label>
 </div>
-<label id="url" data-toggle="tooltip" title="Click me to Copy URL" onclick="copyToClipboard()"></label>
+<div class="container">
+    <div class="row">
+        <form >
+            <div class="form-group">
+                <label>Email</label>
+                <input name="email" type="email" id="email" class="form-control"/>
+            </div>
+            <input class="btn btn-default" type="button" value="Scan To Email" onclick="withEmail(true)"/>
+        </form>
+    </div>
+</div>
 <script>
-    let url = '';
-
-    function copyToClipboard(element) {
-        var $temp = $("<input>");
-        $("body").append($temp);
-        $temp.val(url).select();
-        document.execCommand("copy");
-        $temp.remove();
-    }
-    $(document).ready(function() {
-        $(':button').prop('disabled', true);
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-    $(':file').on('change', function () {
-        var file = this.files[0];
-        $(':button').addClass('btn-primary');
-        $(':button').removeClass('btn-default');
-        $(':button').prop('disabled', false);
-    });
-    $(':button').on('click', function () {
+    const defaultEmail = 'Test@test.com'
+    function withEmail(flag) {
+        let email = document.getElementById('email');
         $.ajax({
-            // Your server script to process the upload
-            url: '/upload',
+            url: '/scanToEmail',
             type: 'POST',
-
-            // Form data
-            data: new FormData($('form')[0]),
-
-            // Tell jQuery not to process data or worry about content-type
-            // You *must* include these options!
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                url = window.location + 'xml/displayScreen/' + data;
-                document.getElementById('url').innerText = url;
-                $(':file').val(null);
-                $(':button').removeClass('btn-primary');
-                $(':button').addClass('btn-default');
-                $(':button').prop('disabled', true);
+            data: {
+                data: JSON.stringify({
+                    "ScanToEmail": {
+                        "Destination": email.value === '' && !flag ? defaultEmail : email.value,
+                        "ScanTray": "ADF",
+                        "ColorMode": "Color",
+                        "Resolution": "Normal",
+                        "FileType": "PDF"
+                    }
+                })
             }
-        });
-    });
+        })
+    }
 </script>
+<!--<script>-->
+    <!--let url = '';-->
+
+    <!--function copyToClipboard(element) {-->
+        <!--var $temp = $("<input>");-->
+        <!--$("body").append($temp);-->
+        <!--$temp.val(url).select();-->
+        <!--document.execCommand("copy");-->
+        <!--$temp.remove();-->
+    <!--}-->
+    <!--$(document).ready(function() {-->
+        <!--$(':button').prop('disabled', true);-->
+        <!--$('[data-toggle="tooltip"]').tooltip();-->
+    <!--});-->
+    <!--$(':file').on('change', function () {-->
+        <!--var file = this.files[0];-->
+        <!--$(':button').addClass('btn-primary');-->
+        <!--$(':button').removeClass('btn-default');-->
+        <!--$(':button').prop('disabled', false);-->
+    <!--});-->
+    <!--$(':button').on('click', function () {-->
+        <!--$.ajax({-->
+            <!--// Your server script to process the upload-->
+            <!--url: '/upload',-->
+            <!--type: 'POST',-->
+
+            <!--// Form data-->
+            <!--data: new FormData($('form')[0]),-->
+
+            <!--// Tell jQuery not to process data or worry about content-type-->
+            <!--// You *must* include these options!-->
+            <!--cache: false,-->
+            <!--contentType: false,-->
+            <!--processData: false,-->
+            <!--success: function (data) {-->
+                <!--url = window.location + 'xml/displayScreen/' + data;-->
+                <!--document.getElementById('url').innerText = url;-->
+                <!--$(':file').val(null);-->
+                <!--$(':button').removeClass('btn-primary');-->
+                <!--$(':button').addClass('btn-default');-->
+                <!--$(':button').prop('disabled', true);-->
+            <!--}-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
 </body>
 </html>
