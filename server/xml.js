@@ -100,21 +100,9 @@ router.post('/displayScreen/:xmlFile/:cdata', (req, res) => {
                 }
             })
             json = JSON.parse(json);
-            fs.readFile(__dirname + '/../standardJson/' + Object.keys(json)[0] + '.json', 'utf8', function (err, data) {
-                if (err) throw err;
-                let options = {compact: true, ignoreComment: true, spaces: 4};
-                let serverJSON = JSON.parse(data);
-                let attr = '_text';
-                json && json[req.params.xml] && Object.keys(json[req.params.xml]).forEach((key) => {
-                        if (typeof json[req.params.xml][key] === 'object') {
-                            appendJson(serverJSON, key, json[req.params.xml][key], attr);
-                        } else {
-                            serverJSON = replaceValue(serverJSON, key, json[req.params.xml][key], attr);
-                        }
-                    });
-                let result = convert.json2xml(serverJSON, options);
-                res.send(result);
-            });
+            const objectName = Object.keys(json)[0];
+            req.params.xml = objectName;
+            getXML(json, req, res);
         });
     }
 })

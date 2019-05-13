@@ -8,7 +8,7 @@
     },
       {
         "_attributes": {
-          "action": "http://localhost:8081/xml/displayScreen/fc73821be7c5936a83e23167da76fa8f",
+          "action": "http://localhost:8081/xml/displayScreen/5a3f5c45a7e445eaf55a736342d51b3d/0",
           "type": "Submit"
         }
       }]
