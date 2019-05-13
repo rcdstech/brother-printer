@@ -59,6 +59,11 @@
                         "FileType": "PDF"
                     }
                 })
+            },
+            success: function (data) {
+                if(email.value !== '') alert('Your Email successfully added')
+
+                $('#email').val(null);
             }
         })
     }

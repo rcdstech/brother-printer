@@ -5,17 +5,17 @@ const convert = require('xml-js');
 const _ = require('lodash');
 const defaultEmail = 'Gajerarubin@gmail.com';
 
-router.post('/getJson', (req, res) => {
-    res.send(convert.xml2json('<?xml version="1.0" encoding="utf-8"?>\n' +
-        '<SerioCommands version="1.2">\n' +
-        '    <DisplayForm>\n' +
-        '        <Script>\n' +
-        '            <![CDATA[<UiScreen><Operations><Op action="../xml/ScanToEmail" type="Submit"/><Op action="../xml/displayScreen/email-button" type="Submit"/>\n' +
-        '    </Operations></UiScreen>]]>\n' +
-        '    </Script>\n' +
-        '</DisplayForm>\n' +
-        '</SerioCommands>', {compact: true, spaces: 4}));
-})
+// router.post('/getJson', (req, res) => {
+//     res.send(convert.xml2json('<?xml version="1.0" encoding="utf-8"?>\n' +
+//         '<SerioCommands version="1.2">\n' +
+//         '    <DisplayForm>\n' +
+//         '        <Script>\n' +
+//         '            <![CDATA[<UiScreen><Operations><Op action="../xml/ScanToEmail" type="Submit"/><Op action="../xml/displayScreen/email-button" type="Submit"/>\n' +
+//         '    </Operations></UiScreen>]]>\n' +
+//         '    </Script>\n' +
+//         '</DisplayForm>\n' +
+//         '</SerioCommands>', {compact: true, spaces: 4}));
+// })
 
 // Display XML from json file
 router.post('/displayScreen/:xmlFile', (req, res) => {

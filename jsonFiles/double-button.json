@@ -10,7 +10,7 @@
         },
         {
           "_attributes": {
-            "action": "../xml/displayScreen/email-button",
+            "action": "../xml/ScanToEmail/scanToEmail",
             "type": "Submit"
           }
         }
