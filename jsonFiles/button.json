@@ -2,7 +2,7 @@
   "Operations": {
     "Op": {
       "_attributes": {
-        "action": "../xml/ScanToEmail",
+        "action": "../xml/ScanToEmail/scanToEmail.json",
         "type": "Submit"
       }
     }

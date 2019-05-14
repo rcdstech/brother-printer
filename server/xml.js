@@ -3,8 +3,99 @@ const router = express.Router();
 const fs = require('fs');
 const convert = require('xml-js');
 const _ = require('lodash');
-const defaultEmail = 'Gajerarubin@gmail.com';
+const defaultEmail = require('../config').email;
 
+
+// For email
+
+
+// Display XML from upload file
+router.post('/getemailxml', (req, res) => {
+    fs.readFile(__dirname + '/scanToEmail.json', 'utf8', function (err, data) {
+        let json = '';
+        data.toString().split('\n').forEach((line) => {
+            if (!line.includes('/*')) {
+                json += line.toString()
+                    .replace("\r\n", "")
+                    .replace("\r", "")
+                    .replace("\n", "");
+            }
+        })
+        json = JSON.parse(json);
+        const objectName = Object.keys(json)[0];
+        if(json[Object.keys(json)[0]]['Destination'] === defaultEmail) {
+            fs.readFile(__dirname + '/../jsonFiles/email-button.json', 'utf8', function (err, data) {
+                if (err) {
+                    res.send("Faild to scan the file");
+                }
+                let serverJSON = convert.json2xml(JSON.parse(data), {compact: true, spaces: 4});
+                serverJSON = serverJSON.toString().replace('</UiScreen>\n' +
+                    '<UiScreen>\n', "")
+                let finalJson = {
+                    "_declaration": {
+                        "_attributes": {
+                            "version": "1.0",
+                            "encoding": "utf-8"
+                        }
+                    },
+                    "SerioCommands": {
+                        "_attributes": {
+                            "version": "1.2"
+                        },
+                        "DisplayForm": {
+                            "Script": {"_cdata": serverJSON}
+                        }
+                    }
+                }
+                res.send(convert.json2xml(finalJson, {compact: true, spaces: 4, cdataKey: '_cdata'}));
+            });
+        } else {
+            fs.readFile(__dirname + '/../jsonFiles/button.json', 'utf8', function (err, data) {
+                if (err) {
+                    res.send("Faild to scan the file");
+                }
+                let serverJSON = convert.json2xml(JSON.parse(data), {compact: true, spaces: 4});
+                serverJSON = serverJSON.toString().replace('</UiScreen>\n' +
+                    '<UiScreen>\n', "")
+                let finalJson = {
+                    "_declaration": {
+                        "_attributes": {
+                            "version": "1.0",
+                            "encoding": "utf-8"
+                        }
+                    },
+                    "SerioCommands": {
+                        "_attributes": {
+                            "version": "1.2"
+                        },
+                        "DisplayForm": {
+                            "Script": {"_cdata": serverJSON}
+                        }
+                    }
+                }
+                res.send(convert.json2xml(finalJson, {compact: true, spaces: 4, cdataKey: '_cdata'}));
+            });
+        }
+        // req.params.xml = objectName;
+        // getXMLForEmail(json, req, res);
+    });
+})
+function getXMLForEmail(json, req, res, attr = '_text', send = true) {
+    fs.readFile(__dirname + '/../jsonFiles/ScanToEmail.json', 'utf8', function (err, data) {
+        if (err) throw err;
+        let options = {compact: true, ignoreComment: true, spaces: 4};
+        let serverJSON = JSON.parse(data);
+            json[req.params.xml] && Object.keys(json[req.params.xml]).forEach((key) => {
+                if (typeof json[req.params.xml][key] === 'object') {
+                    appendJson(serverJSON, key, json[req.params.xml][key], attr);
+                } else {
+                    serverJSON = replaceValue(serverJSON, key, json[req.params.xml][key], attr);
+                }
+            });
+        let result = convert.json2xml(serverJSON, options);
+        res.send(result);
+    });
+}
 // router.post('/getJson', (req, res) => {
 //     res.send(convert.xml2json('<?xml version="1.0" encoding="utf-8"?>\n' +
 //         '<SerioCommands version="1.2">\n' +

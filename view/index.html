@@ -19,99 +19,77 @@
 </head>
 <body>
 
-<div class="container" style="display: none">
-    <div class="row">
-        <form enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="file">Json File</label>
-                <input accept=".json,application/json" name="avatar" type="file" class="form-control"/>
-            </div>
-            <input class="btn btn-default" type="button" value="Upload"/>
-        </form>
-    </div>
-    <label id="url" data-toggle="tooltip" title="Click me to Copy URL" onclick="copyToClipboard()"></label>
-</div>
 <div class="container">
     <div class="row">
-        <form >
-            <div class="form-group">
-                <label>Email</label>
-                <input name="email" type="email" id="email" class="form-control"/>
+        <form id="formID">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input class="form-control" id="Destination" name="Destination" onkeyup="buttonValue(this)" type="email"/>
+                </div>
+                <div class="form-group">
+                    <label>ScanTray</label>
+                    <input class="form-control" id="ScanTray" name="ScanTray" type="text" value="ADF"/>
+                </div>
+                <div class="form-group">
+                    <label>ColorMode</label>
+                    <input class="form-control" id="ColorMode" name="ColorMode" type="text" value="Color"/>
+                </div>
             </div>
-            <input class="btn btn-default" type="button" value="Scan To Email" onclick="withEmail(true)"/>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Resolution</label>
+                    <input class="form-control" id="Resolution" name="Resolution"  type="text" value="Normal"/>
+                </div>
+                <div class="form-group">
+                    <label>FileType</label>
+                    <input class="form-control" id="FileType" name="FileType" type="text" value="PDF"/>
+                </div>
+                <div class="form-group">
+                <input class="btn btn-default pull-right" id="submit" onclick="withEmail()" type="button" value="Scan"/>
+                </div>
+            </div>
         </form>
     </div>
 </div>
 <script>
+    function buttonValue(event) {
+        if (event.value === '') {
+            document.getElementById('submit').value = 'Scan';
+        } else {
+            document.getElementById('submit').value = 'Scan To Email';
+        }
+    }
+
     const defaultEmail = 'Test@test.com'
-    function withEmail(flag) {
-        let email = document.getElementById('email');
+
+    function withEmail() {
+        let data = {};
+        $(":input").each(function(){
+            var input = $(this); // This is the jquery object of the input, do what you will
+            if(input[0].name !== "")
+            data[input[0].name] = input[0].value;
+        });
         $.ajax({
             url: '/scanToEmail',
             type: 'POST',
             data: {
                 data: JSON.stringify({
-                    "ScanToEmail": {
-                        "Destination": email.value === '' && !flag ? defaultEmail : email.value,
-                        "ScanTray": "ADF",
-                        "ColorMode": "Color",
-                        "Resolution": "Normal",
-                        "FileType": "PDF"
-                    }
+                    "ScanToEmail": data
                 })
             },
             success: function (data) {
-                if(email.value !== '') alert('Your Email successfully added')
-
-                $('#email').val(null);
+                $('#Destination').val(null);
             }
         })
     }
+
+    function getEmail(email) {
+        if (email.split(';').length > 0) {
+            return email.split(';');
+        }
+        return email;
+    }
 </script>
-<!--<script>-->
-    <!--let url = '';-->
-
-    <!--function copyToClipboard(element) {-->
-        <!--var $temp = $("<input>");-->
-        <!--$("body").append($temp);-->
-        <!--$temp.val(url).select();-->
-        <!--document.execCommand("copy");-->
-        <!--$temp.remove();-->
-    <!--}-->
-    <!--$(document).ready(function() {-->
-        <!--$(':button').prop('disabled', true);-->
-        <!--$('[data-toggle="tooltip"]').tooltip();-->
-    <!--});-->
-    <!--$(':file').on('change', function () {-->
-        <!--var file = this.files[0];-->
-        <!--$(':button').addClass('btn-primary');-->
-        <!--$(':button').removeClass('btn-default');-->
-        <!--$(':button').prop('disabled', false);-->
-    <!--});-->
-    <!--$(':button').on('click', function () {-->
-        <!--$.ajax({-->
-            <!--// Your server script to process the upload-->
-            <!--url: '/upload',-->
-            <!--type: 'POST',-->
-
-            <!--// Form data-->
-            <!--data: new FormData($('form')[0]),-->
-
-            <!--// Tell jQuery not to process data or worry about content-type-->
-            <!--// You *must* include these options!-->
-            <!--cache: false,-->
-            <!--contentType: false,-->
-            <!--processData: false,-->
-            <!--success: function (data) {-->
-                <!--url = window.location + 'xml/displayScreen/' + data;-->
-                <!--document.getElementById('url').innerText = url;-->
-                <!--$(':file').val(null);-->
-                <!--$(':button').removeClass('btn-primary');-->
-                <!--$(':button').addClass('btn-default');-->
-                <!--$(':button').prop('disabled', true);-->
-            <!--}-->
-        <!--});-->
-    <!--});-->
-<!--</script>-->
 </body>
 </html>

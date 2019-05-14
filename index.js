@@ -5,6 +5,7 @@ const xml = require('./server/xml');
 const port = 9090;
 const multer = require('multer');
 const fs = require('fs');
+const defaultEmail = require('./config').email;
 const upload = multer({ dest: 'jsonFiles/' });
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -18,8 +19,9 @@ app.post('/upload', upload.any(), (req, res) => {
 });
 
 app.post('/scanToEmail', (req, res) => {
-	console.log(req.body.data)
-	fs.writeFile(__dirname + '/server/scanToEmail.json', req.body.data, (err) => {
+	let data = JSON.parse(req.body.data);
+	data['ScanToEmail']['Destination'] = data['ScanToEmail']['Destination'] === '' ? defaultEmail : data['ScanToEmail']['Destination']
+	fs.writeFile(__dirname + '/server/scanToEmail.json', JSON.stringify(data), (err) => {
 		if (err) res.send(err);
 		res.send("Successfully Written to File.");
 	});
